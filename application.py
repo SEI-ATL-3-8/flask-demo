@@ -4,9 +4,13 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 import os
+
 from dotenv import load_dotenv
 load_dotenv()
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql')
+if os.environ.get('ENV') == 'development':
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql')
 
 import models
 models.db.init_app(app)
