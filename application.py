@@ -37,7 +37,7 @@ app.route('/json_test')(json_test)
 def user_test():
     if request.method == "GET":
         users = models.User.query.all()
-        return jsonify(json_list=[u.to_json() for u in users])
+        return jsonify(users=[u.to_json() for u in users])
     elif request.method == "POST":
         try:
             user = models.User(email=request.json["email"], password=request.json["password"])
