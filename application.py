@@ -6,7 +6,7 @@ app = Flask(__name__)
 import os
 from dotenv import load_dotenv
 load_dotenv()
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') + '?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql')
 
 import models
 models.db.init_app(app)
