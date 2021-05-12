@@ -1,0 +1,59 @@
+- brew install python3
+  - python3 --version to check
+  - python3 is like node, it lets us run files from the command line
+- curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  - this puts get-pip.py in whatever dir you're in
+- python3 get-pip.py
+  - pip --version to check
+  - after this runs you can delete get-pip.py
+  - pip is like npm
+- pip install flask
+  - pip installs globally by default
+
+
+decorators are used in most flask tutorials (but this repo shows how to mount routes w/o them)
+https://realpython.com/primer-on-python-decorators/
+
+analog of rowdy-routes:
+FLASK_APP='application.py' flask routes
+
+deployment tips:
+https://stackabuse.com/deploying-a-flask-application-to-heroku/
+
+basics:
+https://flask.palletsprojects.com/en/2.0.x/
+https://flask-sqlalchemy.palletsprojects.com/en/2.x/
+
+more mature folder organization:
+https://github.com/warpspeed/python-flask-sample
+
+model associations:
+https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_many_to_many_relationships.htm
+
+pip installs:
+  psychopg2
+  alembic
+
+db setup:
+  - make models.py
+  - in models.py:
+    from flask_sqlalchemy import SQLAlchemy
+    db = SQLAlchemy()
+  - in application.py:
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
+    import models
+    models.db.init_app(app)
+
+
+alembic (migration manager) setup:
+  - init <dirname> (should prolly call it migrations)
+  - in .ini, remove sqlalchemy.url
+  - in alembic/env.py:
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+    config.set_main_option('sqlalchemy.url', os.environ.get('DATABASE_URL'))
